@@ -33,6 +33,10 @@ class Connection
             . ":dbname="
             . $this->config->getName()
             . ";host="
-            . $this->config->getHost();
+            . $this->config->getHost()
+            . ";port="
+            . $this->config->getPort()
+            . ";charset="
+            . $this->config->getCharset();
     }
 }
