@@ -59,8 +59,8 @@ CREATE TABLE IF NOT EXISTS studio (
     CONSTRAINT fk_parent_studio
         FOREIGN KEY (parent_id)
         REFERENCES studio (id)
-        ON UPDATE CASCADE
-        ON DELETE RESTRICT
+        ON UPDATE NO ACTION
+        ON DELETE SET NULL
 ) ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS movie_genre (
@@ -72,13 +72,13 @@ CREATE TABLE IF NOT EXISTS movie_genre (
     CONSTRAINT fk_movie_genre_movie
         FOREIGN KEY (movie_id)
         REFERENCES movie (id)
-        ON UPDATE CASCADE
-        ON DELETE CASCADE,
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
     CONSTRAINT fk_movie_genre_genre
         FOREIGN KEY (genre_id)
         REFERENCES genre (id)
-        ON UPDATE CASCADE
-        ON DELETE CASCADE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
 ) ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS movie_language (
@@ -90,13 +90,13 @@ CREATE TABLE IF NOT EXISTS movie_language (
     CONSTRAINT fk_movie_language_movie
         FOREIGN KEY (movie_id)
         REFERENCES movie (id)
-        ON UPDATE CASCADE
-        ON DELETE CASCADE,
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
     CONSTRAINT fk_movie_language_language
         FOREIGN KEY (language_id)
         REFERENCES language (id)
-        ON UPDATE CASCADE
-        ON DELETE CASCADE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
 ) ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS movie_studio (
@@ -108,13 +108,13 @@ CREATE TABLE IF NOT EXISTS movie_studio (
     CONSTRAINT fk_movie_studio_movie
         FOREIGN KEY (movie_id)
         REFERENCES movie (id)
-        ON UPDATE CASCADE
-        ON DELETE CASCADE,
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
     CONSTRAINT fk_movie_studio_studio
         FOREIGN KEY (studio_id)
         REFERENCES studio (id)
-        ON UPDATE CASCADE
-        ON DELETE CASCADE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
 ) ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS studio_country (
@@ -126,11 +126,11 @@ CREATE TABLE IF NOT EXISTS studio_country (
     CONSTRAINT fk_movie_country_movie
         FOREIGN KEY (movie_id)
         REFERENCES movie (id)
-        ON UPDATE CASCADE
-        ON DELETE CASCADE,
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
     CONSTRAINT fk_movie_country_country
         FOREIGN KEY (country_id)
         REFERENCES country (id)
-        ON UPDATE CASCADE
-        ON DELETE CASCADE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
 ) ENGINE = InnoDB;
