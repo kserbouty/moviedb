@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 class ConnectionTest extends TestCase
 {
 
-    public function test_pdo_instance_available(): void
+    public function testCreateDatabaseConnection(): void
     {
         $connection = new Connection();
         $pdo = $connection->getPDO();

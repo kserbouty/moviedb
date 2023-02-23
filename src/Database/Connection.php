@@ -15,13 +15,12 @@ class Connection
 
     public function getPDO(): bool|\PDO
     {
-        $pdo = false;
-
         try {
             $pdo = new \PDO($this->getDSN(), $this->config->getUsername(), $this->config->getPassword());
         } catch (\Throwable $exception) {
             echo "Code[" . $exception->getCode() . "]: " . $exception->getMessage();
             echo " in " . $exception->getFile() . " on line " . $exception->getLine() . ".";
+            $pdo = false;
         }
 
         return $pdo;
