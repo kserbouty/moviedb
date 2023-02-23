@@ -42,6 +42,29 @@ class MovieRepository
         return $movie;
     }
 
+    public function getMovieCompanies(int $id): bool|array
+    {
+        try {
+            $pdo = $this->connection->getPDO();
+            $query = "SELECT id, logo_path, name FROM rest_server.company INNER JOIN rest_server.movie_company ON company.id = movie_company.company_id WHERE movie_id = ?;";
+
+            $statement = $pdo->prepare($query);
+            $statement->bindValue(1, $id, \PDO::PARAM_INT);
+            $statement->execute();
+            $statement->setFetchMode(\PDO::FETCH_CLASS, Company::class);
+
+            $companies = $statement->fetchAll();
+
+        } catch (\Throwable $exception) {
+            echo "Code[" . $exception->getCode() . "]: " . $exception->getMessage();
+            echo " in " . $exception->getFile() . " on line " . $exception->getLine() . ".";
+
+            $companies = false;
+        }
+
+        return $companies;
+    }
+
     public function getMovieCountries(int $id): bool|array
     {
         try {
@@ -109,28 +132,5 @@ class MovieRepository
         }
 
         return $genres;
-    }
-
-    public function getMovieCompanies(int $id): bool|array
-    {
-        try {
-            $pdo = $this->connection->getPDO();
-            $query = "SELECT id, logo_path, name FROM rest_server.company INNER JOIN rest_server.movie_company ON company.id = movie_company.company_id WHERE movie_id = ?;";
-
-            $statement = $pdo->prepare($query);
-            $statement->bindValue(1, $id, \PDO::PARAM_INT);
-            $statement->execute();
-            $statement->setFetchMode(\PDO::FETCH_CLASS, Company::class);
-
-            $studios = $statement->fetchAll();
-
-        } catch (\Throwable $exception) {
-            echo "Code[" . $exception->getCode() . "]: " . $exception->getMessage();
-            echo " in " . $exception->getFile() . " on line " . $exception->getLine() . ".";
-
-            $studios = false;
-        }
-
-        return $studios;
     }
 }
