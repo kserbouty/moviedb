@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS movie (
     UNIQUE KEY (title)
 ) ENGINE=InnoDB;
 
-CREATE TABLE IF NOT EXISTS studio (
+CREATE TABLE IF NOT EXISTS company (
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     logo_path VARCHAR(255) NULL,
     name VARCHAR(50) NOT NULL,
@@ -110,20 +110,20 @@ CREATE TABLE IF NOT EXISTS movie_language (
         ON DELETE NO ACTION
 ) ENGINE=InnoDB;
 
-CREATE TABLE IF NOT EXISTS movie_studio (
+CREATE TABLE IF NOT EXISTS movie_company (
     movie_id INT UNSIGNED NOT NULL,
-    studio_id INT UNSIGNED NOT NULL,
-    PRIMARY KEY (movie_id, studio_id),
-    INDEX idx_movie_studio_movie (movie_id),
-    INDEX idx_movie_studio_studio (studio_id),
-    CONSTRAINT fk_movie_studio_movie
+    company_id INT UNSIGNED NOT NULL,
+    PRIMARY KEY (movie_id, company_id),
+    INDEX idx_movie_company_movie (movie_id),
+    INDEX idx_movie_company_company (company_id),
+    CONSTRAINT fk_movie_company_movie
         FOREIGN KEY (movie_id)
         REFERENCES movie (id)
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_movie_studio_studio
-        FOREIGN KEY (studio_id)
-        REFERENCES studio (id)
+    CONSTRAINT fk_movie_company_company
+        FOREIGN KEY (company_id)
+        REFERENCES company (id)
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
 ) ENGINE=InnoDB;

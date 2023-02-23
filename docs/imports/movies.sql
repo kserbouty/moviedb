@@ -29,7 +29,7 @@ INSERT INTO movie (adult, budget, homepage, original_title, overview, poster_pat
     (0, 28000000, 'https://www.warnerbros.com/movies/blade-runner', 'Blade Runner', null, null, '1982-06-25', 41722424, 117, 'Released', 'Blade Runner', null),
     (0, 330000000, null, 'Kôkaku Kidôtai', null, null, '1995-09-23', 918738, 83, 'Released', 'Ghost in the Shell', null);
 
-INSERT INTO studio (logo_path, name) VALUES
+INSERT INTO company (logo_path, name) VALUES
     (null, 'Akira Studio'),
     (null, 'Bandai'),
     (null, 'Kôdansha'),
@@ -51,7 +51,7 @@ INSERT INTO movie_language (movie_id, language_id) VALUES
     (2, 1), (2, 2), (2, 3), (2, 4), (2, 5), (2,6),
     (3, 7);
 
-INSERT INTO movie_studio (movie_id, studio_id) VALUES
+INSERT INTO movie_company (movie_id, company_id) VALUES
     (1, 1), (1, 2), (1, 3),
     (2, 5),
     (3, 2), (3, 3), (3, 4);
