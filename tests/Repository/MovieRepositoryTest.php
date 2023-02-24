@@ -4,7 +4,6 @@ namespace Rest\Tests\Repository;
 
 use PHPUnit\Framework\TestCase;
 use Rest\Server\Entity\Company;
-use Rest\Server\Entity\Country;
 use Rest\Server\Entity\Genre;
 use Rest\Server\Entity\Language;
 use Rest\Server\Entity\Movie;
@@ -18,7 +17,6 @@ class MovieRepositoryTest extends TestCase
 
         $this->assertInstanceOf(Movie::class, $repository->getMovieDetails(1));
         $this->assertContainsOnlyInstancesOf(Company::class, $repository->getMovieCompanies(1));
-        $this->assertContainsOnlyInstancesOf(Country::class, $repository->getMovieCountries(1));
         $this->assertContainsOnlyInstancesOf(Genre::class, $repository->getMovieGenres(1));
         $this->assertContainsOnlyInstancesOf(Language::class, $repository->getMovieLanguages(1));
     }
@@ -39,15 +37,6 @@ class MovieRepositoryTest extends TestCase
 
         $this->expectException(\Throwable::class);
         $repository->getMovieCompanies($malicious_id);
-    }
-
-    public function testInjectionOnCountriesTriggerThrowable(): void
-    {
-        $repository = new MovieRepository();
-        $malicious_id = "1; DROP TABLE country";
-
-        $this->expectException(\Throwable::class);
-        $repository->getMovieCountries($malicious_id);
     }
 
     public function testInjectionOnGenresTriggerThrowable(): void

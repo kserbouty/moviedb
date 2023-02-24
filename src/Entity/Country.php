@@ -6,7 +6,16 @@ namespace Rest\Server\Entity;
 
 class Country
 {
-    private int $id;
     private string $iso_3166_1;
     private string $name;
+
+    public function getIso(): string
+    {
+        return $this->iso_3166_1;
+    }
+
+    public function getName(): string
+    {
+        return $this->name;
+    }
 }

@@ -6,7 +6,16 @@ namespace Rest\Server\Entity;
 
 class Language
 {
-    private int $id;
     private string $iso_639_1;
     private string $name;
+
+    public function getIso(): string
+    {
+        return $this->iso_639_1;
+    }
+
+    public function getName(): string
+    {
+        return $this->name;
+    }
 }
