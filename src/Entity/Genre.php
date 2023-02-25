@@ -7,7 +7,7 @@ namespace Rest\Server\Entity;
 class Genre
 {
     private int $id;
-    private string $name;
+    private string $genre_name;
 
     public function getId(): int
     {
@@ -16,6 +16,6 @@ class Genre
 
     public function getName(): string
     {
-        return $this->name;
+        return $this->genre_name;
     }
 }

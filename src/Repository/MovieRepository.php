@@ -18,14 +18,14 @@ class MovieRepository
         $this->connection = new Connection();
     }
 
-    public function getMovieDetails(int $id): bool|Movie
+    public function getMovieDetails(int $movie_id): bool|Movie
     {
         try {
             $pdo = $this->connection->getPDO();
             $query = "SELECT * FROM rest_server.movie WHERE id = ?;";
 
             $statement = $pdo->prepare($query);
-            $statement->bindValue(1, $id, \PDO::PARAM_INT);
+            $statement->bindValue(1, $movie_id, \PDO::PARAM_INT);
             $statement->execute();
             $statement->setFetchMode(\PDO::FETCH_CLASS, Movie::class);
 
@@ -41,14 +41,14 @@ class MovieRepository
         return $movie;
     }
 
-    public function getMovieCompanies(int $id): bool|array
+    public function getMovieCompanies(int $movie_id): bool|array
     {
         try {
             $pdo = $this->connection->getPDO();
-            $query = "SELECT id, logo_path, name, country_id FROM rest_server.company INNER JOIN rest_server.movie_company ON company.id = movie_company.company_id WHERE movie_id = ?;";
+            $query = "SELECT id, company_name, logo_path, origin_country FROM rest_server.company INNER JOIN rest_server.movie_company ON company.id = movie_company.company_id WHERE movie_id = ?;";
 
             $statement = $pdo->prepare($query);
-            $statement->bindValue(1, $id, \PDO::PARAM_INT);
+            $statement->bindValue(1, $movie_id, \PDO::PARAM_INT);
             $statement->execute();
             $statement->setFetchMode(\PDO::FETCH_CLASS, Company::class);
 
@@ -64,37 +64,14 @@ class MovieRepository
         return $companies;
     }
 
-    public function getMovieLanguages(int $id): bool|array
+    public function getMovieGenres(int $movie_id): bool|array
     {
         try {
             $pdo = $this->connection->getPDO();
-            $query = "SELECT iso_639_1, name FROM rest_server.language INNER JOIN rest_server.movie_language ON language.id = movie_language.language_id WHERE movie_id = ?;";
+            $query = "SELECT id, genre_name FROM rest_server.genre INNER JOIN rest_server.movie_genre ON genre.id = movie_genre.genre_id WHERE movie_id = ?;";
 
             $statement = $pdo->prepare($query);
-            $statement->bindValue(1, $id, \PDO::PARAM_INT);
-            $statement->execute();
-            $statement->setFetchMode(\PDO::FETCH_CLASS, Language::class);
-
-            $languages = $statement->fetchAll();
-
-        } catch (\Throwable $exception) {
-            echo "Code[" . $exception->getCode() . "]: " . $exception->getMessage();
-            echo " in " . $exception->getFile() . " on line " . $exception->getLine() . ".";
-
-            $languages = false;
-        }
-
-        return $languages;
-    }
-
-    public function getMovieGenres(int $id): bool|array
-    {
-        try {
-            $pdo = $this->connection->getPDO();
-            $query = "SELECT id, name FROM rest_server.genre INNER JOIN rest_server.movie_genre ON genre.id = movie_genre.genre_id WHERE movie_id = ?;";
-
-            $statement = $pdo->prepare($query);
-            $statement->bindValue(1, $id, \PDO::PARAM_INT);
+            $statement->bindValue(1, $movie_id, \PDO::PARAM_INT);
             $statement->execute();
             $statement->setFetchMode(\PDO::FETCH_CLASS, Genre::class);
 
@@ -108,5 +85,28 @@ class MovieRepository
         }
 
         return $genres;
+    }
+
+    public function getMovieLanguages(int $movie_id): bool|array
+    {
+        try {
+            $pdo = $this->connection->getPDO();
+            $query = "SELECT iso_639_1, language_name FROM rest_server.language INNER JOIN rest_server.movie_language ON language.id = movie_language.language_id WHERE movie_id = ?;";
+
+            $statement = $pdo->prepare($query);
+            $statement->bindValue(1, $movie_id, \PDO::PARAM_INT);
+            $statement->execute();
+            $statement->setFetchMode(\PDO::FETCH_CLASS, Language::class);
+
+            $languages = $statement->fetchAll();
+
+        } catch (\Throwable $exception) {
+            echo "Code[" . $exception->getCode() . "]: " . $exception->getMessage();
+            echo " in " . $exception->getFile() . " on line " . $exception->getLine() . ".";
+
+            $languages = false;
+        }
+
+        return $languages;
     }
 }

@@ -7,7 +7,7 @@ namespace Rest\Server\Entity;
 class Language
 {
     private string $iso_639_1;
-    private string $name;
+    private string $language_name;
 
     public function getIso(): string
     {
@@ -16,6 +16,6 @@ class Language
 
     public function getName(): string
     {
-        return $this->name;
+        return $this->language_name;
     }
 }

@@ -9,52 +9,46 @@ USE rest_server;
 CREATE TABLE collection (
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     backdrop_path VARCHAR(255) NULL,
-    name VARCHAR(50) NOT NULL,
+    collection_name VARCHAR(50) NOT NULL,
     overview VARCHAR(255) NULL,
     poster_path VARCHAR(255) NULL,
     PRIMARY KEY (id),
-    UNIQUE INDEX UX_collection_name (name ASC) VISIBLE
-) ENGINE=InnoDB;
-
-CREATE TABLE IF NOT EXISTS country (
-    id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-    iso_3166_1 VARCHAR(15) NOT NULL,
-    name VARCHAR(50) NOT NULL,
-    PRIMARY KEY (id),
-    UNIQUE INDEX UX_country_name (name ASC) VISIBLE
-) ENGINE=InnoDB;
-
-CREATE TABLE IF NOT EXISTS genre (
-    id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-    name VARCHAR(50) NOT NULL,
-    PRIMARY KEY (id),
-    UNIQUE KEY (name)
-) ENGINE=InnoDB;
-
-CREATE TABLE IF NOT EXISTS language (
-    id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-    iso_639_1 VARCHAR(10) NOT NULL,
-    name VARCHAR(50) NOT NULL,
-    PRIMARY KEY (id),
-    UNIQUE INDEX UX_genre_name (name ASC) VISIBLE
+    UNIQUE INDEX UX_collection_name (collection_name ASC) INVISIBLE
 ) ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS company (
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     description VARCHAR(255) NULL,
+    company_name VARCHAR(50) NOT NULL,
     headquarters VARCHAR(255) NULL,
     homepage VARCHAR(255) NULL,
     logo_path VARCHAR(255) NULL,
-    name VARCHAR(50) NOT NULL,
-    country_id INT UNSIGNED NOT NULL,
+    origin_country VARCHAR(50) NOT NULL,
     PRIMARY KEY (id),
-    UNIQUE INDEX UX_company_name (name ASC) VISIBLE,
-    INDEX IDX_company_country (country_id ASC) INVISIBLE,
-    CONSTRAINT FK_company_country
-        FOREIGN KEY (country_id)
-        REFERENCES country (id)
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+    UNIQUE INDEX UX_company_name (company_name ASC) INVISIBLE
+) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS country (
+    id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    country_name VARCHAR(50) NOT NULL,
+    iso_3166_1 VARCHAR(15) NOT NULL,
+    PRIMARY KEY (id),
+    UNIQUE INDEX UX_country_name (country_name ASC) INVISIBLE
+) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS genre (
+    id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    genre_name VARCHAR(50) NOT NULL,
+    PRIMARY KEY (id),
+    UNIQUE INDEX UX_genre_name (genre_name ASC) INVISIBLE
+) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS language (
+    id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    iso_639_1 VARCHAR(10) NOT NULL,
+    language_name VARCHAR(50) NOT NULL,
+    PRIMARY KEY (id),
+    UNIQUE INDEX UX_language_name (language_name ASC) INVISIBLE
 ) ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS movie (
@@ -80,8 +74,8 @@ CREATE TABLE IF NOT EXISTS movie (
     vote_average INT NOT NULL,
     vote_count INT NOT NULL,
     PRIMARY KEY (id),
-    UNIQUE INDEX UX_movie_original_title (original_title ASC) VISIBLE,
-    UNIQUE INDEX UX_movie_title (title ASC) VISIBLE,
+    UNIQUE INDEX UX_movie_original_title (original_title ASC) INVISIBLE,
+    UNIQUE INDEX UX_movie_title (title ASC) INVISIBLE,
     INDEX IDX_movie_collection (collection_id ASC) INVISIBLE,
     CONSTRAINT FK_movie_collection
         FOREIGN KEY (collection_id)
@@ -89,6 +83,24 @@ CREATE TABLE IF NOT EXISTS movie (
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
 ) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS company_country (
+    company_id INT UNSIGNED NOT NULL,
+    country_id INT UNSIGNED NOT NULL,
+    PRIMARY KEY (company_id, country_id),
+    INDEX IDX_company_country_company (company_id ASC) INVISIBLE,
+    INDEX IDX_company_country_country (country_id ASC) INVISIBLE,
+    CONSTRAINT FK_company_country_company
+    FOREIGN KEY (company_id)
+        REFERENCES company (id)
+        ON DELETE NO ACTION
+        ON UPDATE NO ACTION,
+    CONSTRAINT FK_company_country_country
+        FOREIGN KEY (country_id)
+        REFERENCES country (id)
+        ON DELETE NO ACTION
+        ON UPDATE NO ACTION
+) ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS movie_company (
 movie_id INT UNSIGNED NOT NULL,

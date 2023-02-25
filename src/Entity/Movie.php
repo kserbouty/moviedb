@@ -12,6 +12,7 @@ class Movie
     private ?int $collection_id;
     private int $budget;
     private ?string $homepage;
+    private ?string $imdb_id;
     private string $original_language;
     private string $original_title;
     private ?string $overview;
@@ -55,6 +56,11 @@ class Movie
     public function getHomepage(): ?string
     {
         return $this->homepage;
+    }
+
+    public function getImdb(): ?string
+    {
+        return $this->imdb_id;
     }
 
     public function getOriginalLanguage(): string
