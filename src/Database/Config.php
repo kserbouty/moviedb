@@ -6,65 +6,73 @@ namespace Rest\Server\Database;
 
 class Config
 {
-    private string $db_driver;
-    private string $db_name;
-    private string $db_host;
-    private string $db_port;
-    private string $db_charset;
-    private string $db_username;
-    private string $db_password;
+    private string $driver;
+    private string $dbname;
+    private string $host;
+    private string $port;
+    private string $charset;
+    private string $username;
+    private string $password;
 
     public function __construct()
     {
-        $this->initialize();
+        $this->setup();
     }
 
     public function getDriver(): string
     {
-        return $this->db_driver;
+        return $this->driver;
     }
 
     public function getName(): string
     {
-        return $this->db_name;
+        return $this->dbname;
     }
 
     public function getHost(): string
     {
-        return $this->db_host;
+        return $this->host;
     }
 
     public function getPort(): string
     {
-        return $this->db_port;
+        return $this->port;
     }
 
     public function getCharset(): string
     {
-        return $this->db_charset;
+        return $this->charset;
     }
 
     public function getUsername(): string
     {
-        return $this->db_username;
+        return $this->username;
     }
 
     public function getPassword(): string
     {
-        return $this->db_password;
+        return $this->password;
     }
 
-    private function initialize(): void
+    private function setup(): void
     {
-        $ini_path = __DIR__ . "/../../config/config.ini";
-        $db_config = parse_ini_file($ini_path, true);
+        $path = __DIR__ . "/../../config/config.ini";
 
-        $this->db_driver = $db_config['database']['driver'];
-        $this->db_name = $db_config['database']['name'];
-        $this->db_host = $db_config['database']['host'];
-        $this->db_port = $db_config['database']['port'];
-        $this->db_charset = $db_config['database']['charset'];
-        $this->db_username = $db_config['database']['username'];
-        $this->db_password = $db_config['database']['password'];
+        try {
+            $config = parse_ini_file($path, true);
+
+            $this->driver = $config['database']['driver'];
+            $this->dbname = $config['database']['dbname'];
+            $this->host = $config['database']['host'];
+            $this->port = $config['database']['port'];
+            $this->charset = $config['database']['charset'];
+            $this->username = $config['database']['username'];
+            $this->password = $config['database']['password'];
+
+        } catch (\Throwable $exception) {
+            echo " Error #" . $exception->getCode() . " : " . $exception->getMessage()
+                . " in " . $exception->getFile() . " on line " . $exception->getLine();
+            exit();
+        }
     }
 }
