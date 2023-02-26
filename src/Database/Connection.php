@@ -13,14 +13,14 @@ class Connection
         $this->config = new Config();
     }
 
-    public function getPDO(): bool|\PDO
+    public function getPDO(): \PDO
     {
         try {
             $pdo = new \PDO($this->getDSN(), $this->config->getUsername(), $this->config->getPassword());
         } catch (\Throwable $exception) {
-            echo "Code[" . $exception->getCode() . "]: " . $exception->getMessage();
-            echo " in " . $exception->getFile() . " on line " . $exception->getLine() . ".";
-            $pdo = false;
+            echo " Error #" . $exception->getCode() . " : " . $exception->getMessage()
+                . " in " . $exception->getFile() . " on line " . $exception->getLine();
+            exit();
         }
 
         return $pdo;

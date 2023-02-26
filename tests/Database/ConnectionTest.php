@@ -7,13 +7,11 @@ use PHPUnit\Framework\TestCase;
 
 class ConnectionTest extends TestCase
 {
-
-    public function testCreateDatabaseConnection(): void
+    public function test_ExecuteQuery_withCorrectDSN_shouldReturnPDOStatement(): void
     {
         $connection = new Connection();
         $pdo = $connection->getPDO();
 
-        $this->assertInstanceOf(\PDO::class, $pdo);
         $this->assertInstanceOf(\PDOStatement::class, $pdo->query("SELECT * FROM rest_server.movie"));
     }
 }
