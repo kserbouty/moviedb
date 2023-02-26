@@ -4,30 +4,38 @@ declare(strict_types=1);
 
 namespace Rest\Server\Controller;
 
-use Rest\Server\Entity\Collection;
-use Rest\Server\Entity\Company;
-use Rest\Server\Entity\Country;
-use Rest\Server\Entity\Genre;
-use Rest\Server\Entity\Language;
-use Rest\Server\Entity\Movie;
+use Rest\Server\Http\Response;
 use Rest\Server\Repository\CompanyRepository;
 use Rest\Server\Repository\MovieRepository;
 
 class MovieController
 {
-    public function getMovie(int $movie_id): bool|object
+    public function getMovie(int $movie_id): void
     {
+        $response = new Response();
         $repository = new MovieRepository();
         $movie = $repository->getMovieDetails($movie_id);
 
-        return $this->buildMovie($movie);
+        if (is_bool($movie)) {
+
+            $error = (object)[
+                'status_message' => 'Resources not found in the database.',
+                'status_code' => 404
+            ];
+
+            $response->send($error, 404);
+        }
+
+        $data = $this->buildMovie($movie);
+
+        $response->send($data, 200);
     }
 
-    private function getCollection(?int $collection_id): ?Collection
+    private function getCollection(?int $collection_id): ?object
     {
         if (is_int($collection_id)) {
 
-            return new Collection();
+            return (object)[];
         }
 
         return null;
@@ -74,7 +82,7 @@ class MovieController
         $repository = new CompanyRepository();
 
         foreach ($companies as $company) {
-            $array_countries[] = $repository->getCompanyCountries($company->getId());
+            $array_countries[] = $repository->getCompanyCountries($company->id);
         }
 
         $array_countries = array_unique($array_countries, SORT_REGULAR);
@@ -103,68 +111,68 @@ class MovieController
         return $array;
     }
 
-    private function buildMovie(Movie $movie): object
+    private function buildMovie(object $movie): object
     {
         return (object)[
-            'adult' => $movie->isAdult(),
-            'backdrop_path' => $movie->getBackdropPath(),
-            'belongs_to_collection' => $this->getCollection($movie->getCollectionId()),
-            'budget' => $movie->getBudget(),
-            'genres' => $this->getGenres($movie->getId()),
-            'homepage' => $movie->getHomepage(),
-            'id' => $movie->getId(),
-            'imdb_id' => $movie->getImdb(),
-            'original_language' => $movie->getOriginalLanguage(),
-            'original_title' => $movie->getOriginalTitle(),
-            'overview' => $movie->getOverview(),
-            'popularity' => $movie->getPopularity(),
-            'poster_path' => $movie->getPosterPath(),
-            'production_companies' => $this->getProductionCompanies($movie->getId()),
-            'production_countries' => $this->getProductionCountries($movie->getId()),
-            'release_date' => $movie->getReleaseDate(),
-            'revenue' => $movie->getRevenue(),
-            'runtime' => $movie->getRuntime(),
-            'spoken_languages' => $this->getSpokenLanguages($movie->getId()),
-            'status' => $movie->getStatus(),
-            'tagline' => $movie->getTagline(),
-            'title' => $movie->getTitle(),
-            'video' => $movie->hasVideo(),
-            'vote_average' => $movie->getVoteAverage(),
-            'vote_count' => $movie->getVoteCount()
+            'adult' => $movie->adult,
+            'backdrop_path' => $movie->backdrop_path,
+            'belongs_to_collection' => $this->getCollection($movie->id),
+            'budget' => $movie->budget,
+            'genres' => $this->getGenres($movie->id),
+            'homepage' => $movie->homepage,
+            'id' => $movie->id,
+            'imdb_id' => $movie->imdb_id,
+            'original_language' => $movie->original_language,
+            'original_title' => $movie->original_title,
+            'overview' => $movie->overview,
+            'popularity' => $movie->popularity,
+            'poster_path' => $movie->poster_path,
+            'production_companies' => $this->getProductionCompanies($movie->id),
+            'production_countries' => $this->getProductionCountries($movie->id),
+            'release_date' => $movie->release_date,
+            'revenue' => $movie->revenue,
+            'runtime' => $movie->runtime,
+            'spoken_languages' => $this->getSpokenLanguages($movie->id),
+            'status' => $movie->status,
+            'tagline' => $movie->tagline,
+            'title' => $movie->title,
+            'video' => $movie->video,
+            'vote_average' => $movie->vote_average,
+            'vote_count' => $movie->vote_count
         ];
     }
 
-    private function buildCompany(Company $company): object
+    private function buildCompany(object $company): object
     {
         return (object)[
-            'name' => $company->getName(),
-            'id' => $company->getId(),
-            'logo_path' => $company->getLogoPath(),
-            'origin_country' => $company->getOriginCountry()
+            'name' => $company->company_name,
+            'id' => $company->id,
+            'logo_path' => $company->logo_path,
+            'origin_country' => $company->origin_country
         ];
     }
 
-    private function buildCountry(Country $country): object
+    private function buildCountry(object $country): object
     {
         return (object)[
-            'iso_3166_1' => $country->getIso(),
-            'name' => $country->getName()
+            'iso_3166_1' => $country->iso_3166_1,
+            'name' => $country->country_name
         ];
     }
 
-    private function buildGenre(Genre $genre): object
+    private function buildGenre(object $genre): object
     {
         return (object)[
-            'id' => $genre->getId(),
-            'name' => $genre->getName()
+            'id' => $genre->id,
+            'name' => $genre->genre_name
         ];
     }
 
-    private function buildLanguage(Language $language): object
+    private function buildLanguage(object $language): object
     {
         return (object)[
-            'iso_639_1' => $language->getIso(),
-            'name' => $language->getName()
+            'iso_639_1' => $language->iso_639_1,
+            'name' => $language->language_name
         ];
     }
 }

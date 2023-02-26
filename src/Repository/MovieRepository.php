@@ -5,10 +5,8 @@ declare(strict_types=1);
 namespace Rest\Server\Repository;
 
 use Rest\Server\Database\Connection;
-use Rest\Server\Entity\Genre;
-use Rest\Server\Entity\Language;
-use Rest\Server\Entity\Movie;
-use Rest\Server\Entity\Company;
+
+require_once __DIR__ . '/../../vendor/autoload.php';
 
 class MovieRepository
 {
@@ -18,7 +16,7 @@ class MovieRepository
         $this->connection = new Connection();
     }
 
-    public function getMovieDetails(int $movie_id): bool|Movie
+    public function getMovieDetails(int $movie_id): bool|object
     {
         try {
             $pdo = $this->connection->getPDO();
@@ -27,21 +25,20 @@ class MovieRepository
             $statement = $pdo->prepare($query);
             $statement->bindValue(1, $movie_id, \PDO::PARAM_INT);
             $statement->execute();
-            $statement->setFetchMode(\PDO::FETCH_CLASS, Movie::class);
+            $statement->setFetchMode(\PDO::FETCH_OBJ);
 
             $movie = $statement->fetch();
 
         } catch (\Throwable $exception) {
-            echo "Code[" . $exception->getCode() . "]: " . $exception->getMessage();
-            echo " in " . $exception->getFile() . " on line " . $exception->getLine() . ".";
-
-            $movie = false;
+            echo " Error #" . $exception->getCode() . " : " . $exception->getMessage()
+                . " in " . $exception->getFile() . " on line " . $exception->getLine();
+            exit();
         }
 
         return $movie;
     }
 
-    public function getMovieCompanies(int $movie_id): bool|array
+    public function getMovieCompanies(int $movie_id): array
     {
         try {
             $pdo = $this->connection->getPDO();
@@ -50,21 +47,20 @@ class MovieRepository
             $statement = $pdo->prepare($query);
             $statement->bindValue(1, $movie_id, \PDO::PARAM_INT);
             $statement->execute();
-            $statement->setFetchMode(\PDO::FETCH_CLASS, Company::class);
+            $statement->setFetchMode(\PDO::FETCH_OBJ);
 
             $companies = $statement->fetchAll();
 
         } catch (\Throwable $exception) {
-            echo "Code[" . $exception->getCode() . "]: " . $exception->getMessage();
-            echo " in " . $exception->getFile() . " on line " . $exception->getLine() . ".";
-
-            $companies = false;
+            echo " Error #" . $exception->getCode() . " : " . $exception->getMessage()
+                . " in " . $exception->getFile() . " on line " . $exception->getLine();
+            exit();
         }
 
         return $companies;
     }
 
-    public function getMovieGenres(int $movie_id): bool|array
+    public function getMovieGenres(int $movie_id): array
     {
         try {
             $pdo = $this->connection->getPDO();
@@ -73,21 +69,20 @@ class MovieRepository
             $statement = $pdo->prepare($query);
             $statement->bindValue(1, $movie_id, \PDO::PARAM_INT);
             $statement->execute();
-            $statement->setFetchMode(\PDO::FETCH_CLASS, Genre::class);
+            $statement->setFetchMode(\PDO::FETCH_OBJ);
 
             $genres = $statement->fetchAll();
 
         } catch (\Throwable $exception) {
-            echo "Code[" . $exception->getCode() . "]: " . $exception->getMessage();
-            echo " in " . $exception->getFile() . " on line " . $exception->getLine() . ".";
-
-            $genres = false;
+            echo " Error #" . $exception->getCode() . " : " . $exception->getMessage()
+                . " in " . $exception->getFile() . " on line " . $exception->getLine();
+            exit();
         }
 
         return $genres;
     }
 
-    public function getMovieLanguages(int $movie_id): bool|array
+    public function getMovieLanguages(int $movie_id): array
     {
         try {
             $pdo = $this->connection->getPDO();
@@ -96,15 +91,14 @@ class MovieRepository
             $statement = $pdo->prepare($query);
             $statement->bindValue(1, $movie_id, \PDO::PARAM_INT);
             $statement->execute();
-            $statement->setFetchMode(\PDO::FETCH_CLASS, Language::class);
+            $statement->setFetchMode(\PDO::FETCH_OBJ);
 
             $languages = $statement->fetchAll();
 
         } catch (\Throwable $exception) {
-            echo "Code[" . $exception->getCode() . "]: " . $exception->getMessage();
-            echo " in " . $exception->getFile() . " on line " . $exception->getLine() . ".";
-
-            $languages = false;
+            echo " Error #" . $exception->getCode() . " : " . $exception->getMessage()
+                . " in " . $exception->getFile() . " on line " . $exception->getLine();
+            exit();
         }
 
         return $languages;

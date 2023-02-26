@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Rest\Server\Repository;
 
 use Rest\Server\Database\Connection;
-use Rest\Server\Entity\Country;
 
 class CompanyRepository
 {
@@ -16,7 +15,7 @@ class CompanyRepository
         $this->connection = new Connection();
     }
 
-    public function getCompanyCountries(int $company_id): bool|array
+    public function getCompanyCountries(int $company_id): array
     {
         try {
             $pdo = $this->connection->getPDO();
@@ -25,15 +24,14 @@ class CompanyRepository
             $statement = $pdo->prepare($query);
             $statement->bindValue(1, $company_id, \PDO::PARAM_INT);
             $statement->execute();
-            $statement->setFetchMode(\PDO::FETCH_CLASS, Country::class);
+            $statement->setFetchMode(\PDO::FETCH_OBJ);
 
             $countries = $statement->fetchAll();
 
         } catch (\Throwable $exception) {
-            echo "Code[" . $exception->getCode() . "]: " . $exception->getMessage();
-            echo " in " . $exception->getFile() . " on line " . $exception->getLine() . ".";
-
-            $countries = false;
+            echo " Error #" . $exception->getCode() . " : " . $exception->getMessage()
+                . " in " . $exception->getFile() . " on line " . $exception->getLine();
+            exit();
         }
 
         return $countries;
