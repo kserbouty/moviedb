@@ -10,7 +10,7 @@ use Rest\Server\Repository\MovieRepository;
 
 class MovieController
 {
-    public function getMovie(int $movie_id): void
+    public function getMovie(int $movie_id): string
     {
         $response = new Response();
         $repository = new MovieRepository();
@@ -23,12 +23,12 @@ class MovieController
                 'status_code' => 404
             ];
 
-            $response->send($error, 404);
+            return $response->jsonResponse($error, 404);
         }
 
         $data = $this->buildMovie($movie);
 
-        $response->send($data, 200);
+        return $response->jsonResponse($data, 200);
     }
 
     private function getCollection(?int $collection_id): ?object

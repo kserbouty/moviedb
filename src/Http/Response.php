@@ -8,7 +8,7 @@ error_reporting(0);
 
 class Response
 {
-    public function send(object $data, int $status): void
+    public function jsonResponse(object $data, int $status): string
     {
         header_remove();
         header('Access-Control-Allow-Origin: *');
@@ -26,6 +26,6 @@ class Response
             exit();
         }
 
-        echo $response;
+        return $response;
     }
 }

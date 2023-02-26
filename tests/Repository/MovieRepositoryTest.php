@@ -8,7 +8,7 @@ use Rest\Server\Repository\MovieRepository;
 class
 MovieRepositoryTest extends TestCase
 {
-    public function test_FetchMovies_withMaliciousId_shouldTriggerThrowable(): void
+    public function testFetchMovies_withMaliciousId_shouldTriggerThrowable(): void
     {
         $repository = new MovieRepository();
         $malicious_id = "1; DROP TABLE movie";
@@ -17,7 +17,7 @@ MovieRepositoryTest extends TestCase
         $repository->getMovieDetails($malicious_id);
     }
 
-    public function test_FetchMovies_withWrongId_shouldReturnEmpty(): void
+    public function testFetchMovies_withWrongId_shouldReturnEmpty(): void
     {
         $repository = new MovieRepository();
         $wrong_id = 99;
@@ -25,7 +25,7 @@ MovieRepositoryTest extends TestCase
         $this->assertEmpty($repository->getMovieDetails($wrong_id));
     }
 
-    public function test_FetchCompanies_withMaliciousId_shouldTriggerThrowable(): void
+    public function testFetchCompanies_withMaliciousId_shouldTriggerThrowable(): void
     {
         $repository = new MovieRepository();
         $malicious_id = "1; DROP TABLE movie";
@@ -34,7 +34,7 @@ MovieRepositoryTest extends TestCase
         $repository->getMovieCompanies($malicious_id);
     }
 
-    public function test_FetchCompanies_withWrongId_shouldReturnEmpty(): void
+    public function testFetchCompanies_withWrongId_shouldReturnEmpty(): void
     {
         $repository = new MovieRepository();
         $wrong_id = 99;
@@ -42,7 +42,7 @@ MovieRepositoryTest extends TestCase
         $this->assertEmpty($repository->getMovieCompanies($wrong_id));
     }
 
-    public function test_FetchGenres_withMaliciousId_shouldTriggerThrowable(): void
+    public function testFetchGenres_withMaliciousId_shouldTriggerThrowable(): void
     {
         $repository = new MovieRepository();
         $malicious_id = "1; DROP TABLE movie";
@@ -51,7 +51,7 @@ MovieRepositoryTest extends TestCase
         $repository->getMovieGenres($malicious_id);
     }
 
-    public function test_FetchGenres_withWrongId_shouldReturnEmpty(): void
+    public function testFetchGenres_withWrongId_shouldReturnEmpty(): void
     {
         $repository = new MovieRepository();
         $wrong_id = 99;
@@ -59,7 +59,7 @@ MovieRepositoryTest extends TestCase
         $this->assertEmpty($repository->getMovieGenres($wrong_id));
     }
 
-    public function test_FetchLanguages_withMaliciousId_shouldTriggerThrowable(): void
+    public function testFetchLanguages_withMaliciousId_shouldTriggerThrowable(): void
     {
         $repository = new MovieRepository();
         $malicious_id = "1; DROP TABLE movie";
@@ -68,7 +68,7 @@ MovieRepositoryTest extends TestCase
         $repository->getMovieLanguages($malicious_id);
     }
 
-    public function test_FetchLanguages_withWrongId_shouldReturnEmpty(): void
+    public function testFetchLanguages_withWrongId_shouldReturnEmpty(): void
     {
         $repository = new MovieRepository();
         $wrong_id = 99;

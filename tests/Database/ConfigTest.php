@@ -7,7 +7,7 @@ use Rest\Server\Database\Config;
 
 class ConfigTest extends TestCase
 {
-    public function test_AccessIniFile_withCorrectPath_shouldBeReadable(): void
+    public function testAccessIniFile_withCorrectPath_shouldBeReadable(): void
     {
         $path = __DIR__ . '/../../config';
         $file = __DIR__ . '/../../config/config.ini';
@@ -19,7 +19,7 @@ class ConfigTest extends TestCase
         $this->assertFileIsReadable($file);
     }
 
-    public function test_ParseIniFile_withCorrectCredentials_shouldReturnStringForEachElement(): void
+    public function testParseIniFile_withCorrectCredentials_shouldReturnStringForEachElement(): void
     {
         $config = new Config();
 

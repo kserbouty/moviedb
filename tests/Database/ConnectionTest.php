@@ -7,7 +7,7 @@ use PHPUnit\Framework\TestCase;
 
 class ConnectionTest extends TestCase
 {
-    public function test_ExecuteQuery_withCorrectDSN_shouldReturnPDOStatement(): void
+    public function testExecuteQuery_withCorrectDSN_shouldReturnPDOStatement(): void
     {
         $connection = new Connection();
         $pdo = $connection->getPDO();

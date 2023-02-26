@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 class CompanyRepositoryTest extends TestCase
 {
 
-    public function test_FetchCountries_withMaliciousId_shouldTriggerThrowable(): void
+    public function testFetchCountries_withMaliciousId_shouldTriggerThrowable(): void
     {
         $repository = new CompanyRepository();
         $malicious_id = "1; DROP TABLE country";
@@ -17,7 +17,7 @@ class CompanyRepositoryTest extends TestCase
         $repository->getCompanyCountries($malicious_id);
     }
 
-    public function test_FetchCountries_withWrongId_shouldReturnEmpty(): void
+    public function testFetchCountries_withWrongId_shouldReturnEmpty(): void
     {
         $repository = new CompanyRepository();
         $wrong_id = 99;
