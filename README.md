@@ -1,6 +1,6 @@
-# MovieDb API
+# MovieDB
 
-Reproduction of resources send by The Movie Database API.
+Reproduction of resources from The Movie Database API.
 
 ## Visuals
 
@@ -13,18 +13,24 @@ Reproduction of resources send by The Movie Database API.
 
 ## Features
 
-- Follow REST architecture for HTTP requests and responses.
+- Follow REST constraints for requests and responses.
+- Made to be use from an external client through endpoints.
+
+## Roadmap
+
+- [ ] Movies / Get Details : https://developers.themoviedb.org/3/movies/get-movie-details
+- [ ] Collections / Get Details : https://developers.themoviedb.org/3/collections/get-collection-details
+- [ ] Companies / Get Details : https://developers.themoviedb.org/3/companies/get-company-details
+- [ ] Genres / Get Details : https://developers.themoviedb.org/3/genres/get-movie-list
+- [ ] Movies / Rate Movie : https://developers.themoviedb.org/3/movies/rate-movie
+- [ ] Movies / Delete Rating : https://developers.themoviedb.org/3/movies/delete-movie-rating
 
 ## Resources
 
 - REST principles : https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm
 - REST constraints : https://www.geeksforgeeks.org/rest-api-architectural-constraints/
 - Repository pattern : https://martinfowler.com/eaaCatalog/repository.html
-- Response structure : 
-  - Get Details : https://developers.themoviedb.org/3/movies/get-movie-details
-- Movie data :
-  - Akira : https://www.imdb.com/title/tt0094625/
-  - Ghost in the Shell : https://www.imdb.com/title/tt0113568/
+- Movies data : https://www.imdb.com/
 
 ## Setup
 
@@ -39,13 +45,13 @@ Reproduction of resources send by The Movie Database API.
 Clone the repository :
 
 ```bash
-git clone https://github.com/kserbouty/moviedb-api.git
+git clone https://github.com/kserbouty/moviedb.git
 ```
 
 Switch to the repository folder :
 
 ```bash
-cd moviedb-api
+cd moviedb
 ```
 
 Install all the dependencies :
