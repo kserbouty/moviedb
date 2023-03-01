@@ -40,7 +40,7 @@ class Builder
     protected function buildCompany(object $company): object
     {
         return (object)[
-            'name' => $company->company_name,
+            'name' => $company->name,
             'id' => $company->id,
             'logo_path' => $company->logo_path,
             'origin_country' => $company->origin_country
@@ -51,7 +51,7 @@ class Builder
     {
         return (object)[
             'iso_3166_1' => $country->iso_3166_1,
-            'name' => $country->country_name
+            'name' => $country->name
         ];
     }
 
@@ -59,7 +59,7 @@ class Builder
     {
         return (object)[
             'id' => $genre->id,
-            'name' => $genre->genre_name
+            'name' => $genre->name
         ];
     }
 
@@ -67,7 +67,7 @@ class Builder
     {
         return (object)[
             'iso_639_1' => $language->iso_639_1,
-            'name' => $language->language_name
+            'name' => $language->name
         ];
     }
 }
