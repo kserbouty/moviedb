@@ -21,7 +21,7 @@ Reproduction of resources from The Movie Database API.
 - [ ] Movies / Get Details : https://developers.themoviedb.org/3/movies/get-movie-details
 - [ ] Collections / Get Details : https://developers.themoviedb.org/3/collections/get-collection-details
 - [ ] Companies / Get Details : https://developers.themoviedb.org/3/companies/get-company-details
-- [ ] Genres / Get Details : https://developers.themoviedb.org/3/genres/get-movie-list
+- [ ] Genres / Get List : https://developers.themoviedb.org/3/genres/get-movie-list
 - [ ] Movies / Rate Movie : https://developers.themoviedb.org/3/movies/rate-movie
 - [ ] Movies / Delete Rating : https://developers.themoviedb.org/3/movies/delete-movie-rating
 

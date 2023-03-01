@@ -12,6 +12,6 @@ class ConnectionTest extends TestCase
         $connection = new Connection();
         $pdo = $connection->getPDO();
 
-        $this->assertInstanceOf(\PDOStatement::class, $pdo->query("SELECT * FROM rest_server.movie"));
+        $this->assertInstanceOf(\PDOStatement::class, $pdo->query("SELECT * FROM movie_db.movie"));
     }
 }
