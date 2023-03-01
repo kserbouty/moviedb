@@ -1,5 +1,5 @@
 {
-    "name": "kserbouty/restserver",
+    "name": "kserbouty/moviedb",
     "type": "project",
     "license": "MIT",
     "autoload": {
