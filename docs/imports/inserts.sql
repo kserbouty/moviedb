@@ -1,4 +1,4 @@
-USE rest_server;
+USE movie_db;
 
 INSERT INTO collection (collection_name) VALUE ('The Lord of the Rings Trilogy');
 

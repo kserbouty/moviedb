@@ -20,7 +20,7 @@ class MovieRepository
     {
         try {
             $pdo = $this->connection->getPDO();
-            $query = "SELECT * FROM rest_server.movie WHERE id = ?;";
+            $query = "SELECT * FROM movie_db.movie WHERE id = ?;";
 
             $statement = $pdo->prepare($query);
             $statement->bindValue(1, $movie_id, \PDO::PARAM_INT);
@@ -42,7 +42,7 @@ class MovieRepository
     {
         try {
             $pdo = $this->connection->getPDO();
-            $query = "SELECT id, company_name, logo_path, origin_country FROM rest_server.company INNER JOIN rest_server.movie_company ON company.id = movie_company.company_id WHERE movie_id = ?;";
+            $query = "SELECT id, company_name, logo_path, origin_country FROM movie_db.company INNER JOIN movie_db.movie_company ON company.id = movie_company.company_id WHERE movie_id = ?;";
 
             $statement = $pdo->prepare($query);
             $statement->bindValue(1, $movie_id, \PDO::PARAM_INT);
@@ -64,7 +64,7 @@ class MovieRepository
     {
         try {
             $pdo = $this->connection->getPDO();
-            $query = "SELECT id, genre_name FROM rest_server.genre INNER JOIN rest_server.movie_genre ON genre.id = movie_genre.genre_id WHERE movie_id = ?;";
+            $query = "SELECT id, genre_name FROM movie_db.genre INNER JOIN movie_db.movie_genre ON genre.id = movie_genre.genre_id WHERE movie_id = ?;";
 
             $statement = $pdo->prepare($query);
             $statement->bindValue(1, $movie_id, \PDO::PARAM_INT);
@@ -86,7 +86,7 @@ class MovieRepository
     {
         try {
             $pdo = $this->connection->getPDO();
-            $query = "SELECT iso_639_1, language_name FROM rest_server.language INNER JOIN rest_server.movie_language ON language.id = movie_language.language_id WHERE movie_id = ?;";
+            $query = "SELECT iso_639_1, language_name FROM movie_db.language INNER JOIN movie_db.movie_language ON language.id = movie_language.language_id WHERE movie_id = ?;";
 
             $statement = $pdo->prepare($query);
             $statement->bindValue(1, $movie_id, \PDO::PARAM_INT);

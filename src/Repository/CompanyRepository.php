@@ -19,7 +19,7 @@ class CompanyRepository
     {
         try {
             $pdo = $this->connection->getPDO();
-            $query = "SELECT iso_3166_1, country_name FROM rest_server.country INNER JOIN rest_server.company_country ON country.id = company_country.country_id WHERE company_id = ?;";
+            $query = "SELECT iso_3166_1, country_name FROM movie_db.country INNER JOIN movie_db.company_country ON country.id = company_country.country_id WHERE company_id = ?;";
 
             $statement = $pdo->prepare($query);
             $statement->bindValue(1, $company_id, \PDO::PARAM_INT);

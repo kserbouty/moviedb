@@ -1,10 +1,10 @@
-DROP DATABASE IF EXISTS rest_server;
+DROP DATABASE IF EXISTS movie_db;
 
-CREATE SCHEMA IF NOT EXISTS rest_server
+CREATE SCHEMA IF NOT EXISTS movie_db
     CHARACTER SET = utf8mb4
     COLLATE = utf8mb4_general_ci;
 
-USE rest_server;
+USE movie_db;
 
 CREATE TABLE collection (
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
