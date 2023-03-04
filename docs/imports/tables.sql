@@ -8,12 +8,12 @@ USE movie_db;
 
 CREATE TABLE collection (
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-    name VARCHAR(50) NOT NULL,
+    collection_name VARCHAR(50) NOT NULL,
     overview VARCHAR(255) NOT NULL,
     poster_path VARCHAR(255) NULL,
     backdrop_path VARCHAR(255) NOT NULL,
     PRIMARY KEY (id),
-    UNIQUE INDEX UX_collection_name (name ASC) INVISIBLE
+    UNIQUE INDEX UX_collection_name (collection_name ASC) INVISIBLE
 ) ENGINE=InnoDB;
 
 CREATE TABLE company (
@@ -22,11 +22,11 @@ CREATE TABLE company (
     headquarters VARCHAR(255) NOT NULL,
     homepage VARCHAR(255) NOT NULL,
     logo_path VARCHAR(255) NOT NULL,
-    name VARCHAR(50) NOT NULL,
+    company_name VARCHAR(50) NOT NULL,
     origin_country VARCHAR(50) NOT NULL,
     company_id INT UNSIGNED NULL,
     PRIMARY KEY (id),
-    UNIQUE INDEX UX_company_name (name ASC) INVISIBLE,
+    UNIQUE INDEX UX_company_name (company_name ASC) INVISIBLE,
     CONSTRAINT FK_company_company
         FOREIGN KEY (company_id)
         REFERENCES company (id)
@@ -36,25 +36,25 @@ CREATE TABLE company (
 
 CREATE TABLE country (
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-    name VARCHAR(50) NOT NULL,
+    country_name VARCHAR(50) NOT NULL,
     iso_3166_1 VARCHAR(9) NOT NULL,
     PRIMARY KEY (id),
-    UNIQUE INDEX UX_country_name (name ASC) INVISIBLE
+    UNIQUE INDEX UX_country_name (country_name ASC) INVISIBLE
 ) ENGINE=InnoDB;
 
 CREATE TABLE genre (
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-    name VARCHAR(50) NOT NULL,
+    genre_name VARCHAR(50) NOT NULL,
     PRIMARY KEY (id),
-    UNIQUE INDEX UX_genre_name (name ASC) INVISIBLE
+    UNIQUE INDEX UX_genre_name (genre_name ASC) INVISIBLE
 ) ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS language (
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     iso_639_1 VARCHAR(10) NOT NULL,
-    name VARCHAR(50) NOT NULL,
+    language_name VARCHAR(50) NOT NULL,
     PRIMARY KEY (id),
-    UNIQUE INDEX UX_language_name (name ASC) INVISIBLE
+    UNIQUE INDEX UX_language_name (language_name ASC) INVISIBLE
 ) ENGINE=InnoDB;
 
 CREATE TABLE movie (

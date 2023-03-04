@@ -6,7 +6,7 @@ namespace Rest\Server\Repository;
 
 use Rest\Server\Database\Connection;
 
-class CompanyRepository
+class CollectionRepository
 {
     private Connection $connection;
 
@@ -15,18 +15,18 @@ class CompanyRepository
         $this->connection = new Connection();
     }
 
-    public function getCompanyCountries(int $company_id): array
+    public function getCollectionDetails(int $collection_id): bool|object
     {
         try {
             $pdo = $this->connection->getPDO();
-            $query = "SELECT iso_3166_1, country_name FROM movie_db.country INNER JOIN movie_db.company_country ON country.id = company_country.country_id WHERE company_id = ?;";
+            $query = "SELECT * FROM movie_db.collection WHERE collection.id = ?;";
 
             $statement = $pdo->prepare($query);
-            $statement->bindValue(1, $company_id, \PDO::PARAM_INT);
+            $statement->bindValue(1, $collection_id, \PDO::PARAM_INT);
             $statement->execute();
             $statement->setFetchMode(\PDO::FETCH_OBJ);
 
-            $countries = $statement->fetchAll();
+            $collection = $statement->fetch();
 
         } catch (\Throwable $exception) {
             echo " Error #" . $exception->getCode() . " : " . $exception->getMessage()
@@ -34,6 +34,6 @@ class CompanyRepository
             exit();
         }
 
-        return $countries;
+        return $collection;
     }
 }

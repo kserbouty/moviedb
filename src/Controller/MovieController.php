@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Rest\Server\Controller;
 
 use Rest\Server\Http\Response;
+use Rest\Server\Repository\CollectionRepository;
 use Rest\Server\Repository\CompanyRepository;
 use Rest\Server\Repository\MovieRepository;
 use Rest\Server\Service\Builder;
@@ -36,7 +37,10 @@ class MovieController extends Builder
     {
         if (is_int($collection_id)) {
 
-            return (object)[];
+            $repository = new CollectionRepository();
+            $collection = $repository->getCollectionDetails($collection_id);
+
+            return $this->buildCollection($collection);
         }
 
         return null;

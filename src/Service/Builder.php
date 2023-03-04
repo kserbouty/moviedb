@@ -11,7 +11,7 @@ class Builder
         return (object)[
             'adult' => $movie->adult,
             'backdrop_path' => $movie->backdrop_path,
-            'belongs_to_collection' => $controller->getCollection($movie->id),
+            'belongs_to_collection' => $controller->getCollection($movie->collection_id),
             'budget' => $movie->budget,
             'genres' => $controller->getGenres($movie->id),
             'homepage' => $movie->homepage,
@@ -37,10 +37,21 @@ class Builder
         ];
     }
 
+    protected function buildCollection(object $collection): object
+    {
+        return (object)[
+            'id' => $collection->id,
+            'name' => $collection->collection_name,
+            'overview' => $collection->overview,
+            'poster_path' => $collection->poster_path,
+            'backdrop_path' => $collection->backdrop_path
+        ];
+    }
+
     protected function buildCompany(object $company): object
     {
         return (object)[
-            'name' => $company->name,
+            'name' => $company->company_name,
             'id' => $company->id,
             'logo_path' => $company->logo_path,
             'origin_country' => $company->origin_country
@@ -51,7 +62,7 @@ class Builder
     {
         return (object)[
             'iso_3166_1' => $country->iso_3166_1,
-            'name' => $country->name
+            'name' => $country->country_name
         ];
     }
 
@@ -59,7 +70,7 @@ class Builder
     {
         return (object)[
             'id' => $genre->id,
-            'name' => $genre->name
+            'name' => $genre->genre_name
         ];
     }
 
@@ -67,7 +78,7 @@ class Builder
     {
         return (object)[
             'iso_639_1' => $language->iso_639_1,
-            'name' => $language->name
+            'name' => $language->language_name
         ];
     }
 }
