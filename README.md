@@ -17,7 +17,6 @@ Follow PSR-1, PSR-4 and PSR-12 standards.
 
 - REST : https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm
 - Repository pattern : https://martinfowler.com/eaaCatalog/repository.html
-- Server configuration : https://cheatsheetseries.owasp.org/cheatsheets/PHP_Configuration_Cheat_Sheet.html
 - Response model : https://developers.themoviedb.org/3/movies/get-movie-details
 
 ### Visuals
@@ -26,16 +25,17 @@ Follow PSR-1, PSR-4 and PSR-12 standards.
 
 ![image](./docs/diagrams/entity-relationship.png)
 
-*Movie details*
+*Code 403*
 
-![image](./docs/screenshots/movie-response.png)
+![image](./docs/screenshots/403.png)
 
-### Roadmap
+*Code 404*
 
-- [ ] Movies / Get Details : https://developers.themoviedb.org/3/movies/get-movie-details
-- [ ] Collections / Get Details : https://developers.themoviedb.org/3/collections/get-collection-details
-- [ ] Companies / Get Details : https://developers.themoviedb.org/3/companies/get-company-details
-- [ ] Genres / Get List : https://developers.themoviedb.org/3/genres/get-movie-list
+![image](./docs/screenshots/404.png)
+
+*Response*
+
+![image](./docs/screenshots/movie-details.png)
 
 ## Installation
 
@@ -45,7 +45,7 @@ Follow PSR-1, PSR-4 and PSR-12 standards.
 - Apache 2.4+
 - MySQL 8.0+
 
-### Installation
+### Manual installation
 
 Clone the repository :
 
@@ -66,6 +66,20 @@ composer install
 ```
 
 Set database credentials in config/config.ini then import sql scripts (tables.sql first) available in docs/imports.
+
+Run the local server :
+
+```bash
+php -S localhost:8000 -t public
+```
+
+Responses available :
+
+- Akira : <http://localhost:8000/movie/1>
+- Ghost in the Shell : <http://localhost:8000/movie/2>
+- The Lord of the Rings: The Fellowship of the Ring : <http://localhost:8000/movie/3>
+- The Lord of the Rings: The Two Towers : <http://localhost:8000/movie/4>
+- The Lord of the Rings: The Return of the King : <http://localhost:8000/movie/5>
 
 ### Tests
 
