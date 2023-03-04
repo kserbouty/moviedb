@@ -77,8 +77,7 @@ class MovieController extends Builder
         $array = [];
         $array_countries = [];
 
-        $repository = new MovieRepository();
-        $companies = $repository->getMovieCompanies($movie_id);
+        $companies = $this->getProductionCompanies($movie_id);
 
         $repository = new CompanyRepository();
 

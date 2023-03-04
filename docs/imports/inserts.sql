@@ -49,7 +49,7 @@ INSERT INTO movie (adult, budget, original_language, original_title, popularity,
     (0, 94000000, 'English', 'The Lord of the Rings: The Return of the King', 5, '2002-12-17', 1146457748, 'Released', 'The Lord of the Rings: The Return of the King', 1, 90, 2200);
 
 INSERT INTO company_country (company_id, country_id) VALUES
-    (1,1), (2,1), (3,1), (4,1), (5,1), (6,1), (7,1), (8,1), (9,1), (10,1), (11,1), (12,1), (13,1), (14,2), (15,3);
+    (1,1), (2,1), (3,1), (4,1), (5,1), (6,1), (7,1), (8,1), (9,3), (10,1), (11,1), (12,1), (13,1), (14,2), (15,3);
 
 INSERT INTO movie_company (movie_id, company_id) VALUES
     (1,1), (1,2), (1,4), (1,5), (1,6), (1,7), (1,11), (1,12), (1,13),
