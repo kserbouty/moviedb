@@ -26,6 +26,10 @@ Follow PSR-1, PSR-4 and PSR-12 standards.
 
 ![image](./docs/diagrams/entity-relationship.png)
 
+*Movie details*
+
+![image](./docs/screenshots/movie-response.png)
+
 ### Roadmap
 
 - [ ] Movies / Get Details : https://developers.themoviedb.org/3/movies/get-movie-details
