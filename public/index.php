@@ -8,6 +8,4 @@ use Rest\Server\Http\Router;
 
 $router = new Router();
 
-$url = $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-
-$router->action($url);
+$router->action( $_SERVER['REQUEST_URI']);
