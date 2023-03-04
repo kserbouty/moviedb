@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Rest\Server\Http;
 
-error_reporting(0);
-
 class Response
 {
     public function jsonResponse(object $data, int $status): string

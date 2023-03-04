@@ -6,8 +6,6 @@ namespace Rest\Server\Repository;
 
 use Rest\Server\Database\Connection;
 
-require_once __DIR__ . '/../../vendor/autoload.php';
-
 class MovieRepository
 {
     private Connection $connection;
