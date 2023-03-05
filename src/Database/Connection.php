@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Rest\Server\Database;
 
-class Connection
+readonly class Connection
 {
-    private readonly Config $config;
+    private Config $config;
 
     public function __construct()
     {

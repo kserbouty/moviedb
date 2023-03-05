@@ -5,7 +5,7 @@ REST API inspired by [The Movie Database API](https://www.themoviedb.org/documen
 Build a relational database representing the data needed to reproduce a response made from The Movie Database API.
 Perform data access through repositories and prepare responses with correct headers to send a JSON object.
 
-Follow PSR-1, PSR-4 and PSR-12 standards.
+Follow PSR-1, PSR-4 and PSR-12 recommendations.
 
 ### Technologies
 
@@ -95,4 +95,4 @@ vendor/bin/phpunit tests
 
 ## Project status
 
-*In Development*
+*Completed*
