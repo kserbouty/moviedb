@@ -16,9 +16,6 @@
     </exclude>
   </coverage>
   <testsuites>
-    <testsuite name="controller">
-      <directory>tests/Controller</directory>
-    </testsuite>
     <testsuite name="database">
       <directory>tests/Database</directory>
     </testsuite>

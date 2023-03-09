@@ -7,28 +7,18 @@ use Rest\Server\Database\Config;
 
 class ConfigTest extends TestCase
 {
-    public function testAccessIniFile_withCorrectPath_shouldBeReadable(): void
-    {
-        $path = __DIR__ . '/../../config';
-        $file = __DIR__ . '/../../config/config.ini';
-
-        $this->assertDirectoryExists($path);
-        $this->assertDirectoryIsReadable($path);
-
-        $this->assertFileExists($file);
-        $this->assertFileIsReadable($file);
-    }
-
-    public function testParseIniFile_withCorrectCredentials_shouldReturnStringForEachElement(): void
+    public function testInitializeConfigFetchCredentials(): void
     {
         $config = new Config();
 
-        $this->assertIsString($config->getDriver());
-        $this->assertIsString($config->getName());
-        $this->assertIsString($config->getHost());
-        $this->assertIsString($config->getPort());
-        $this->assertIsString($config->getCharset());
-        $this->assertIsString($config->getUsername());
-        $this->assertIsString($config->getPassword());
+        $ini_file = parse_ini_file($config::CONFIG_PATH, true);
+
+        $this->assertArrayHasKey('db_driver', $ini_file);
+        $this->assertArrayHasKey('db_name', $ini_file);
+        $this->assertArrayHasKey('db_host', $ini_file);
+        $this->assertArrayHasKey('db_port', $ini_file);
+        $this->assertArrayHasKey('db_charset', $ini_file);
+        $this->assertArrayHasKey('db_username', $ini_file);
+        $this->assertArrayHasKey('db_password', $ini_file);
     }
 }

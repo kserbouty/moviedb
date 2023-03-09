@@ -4,38 +4,65 @@ declare(strict_types=1);
 
 namespace Rest\Server\Database;
 
-readonly class Connection
+class Connection
 {
-    private Config $config;
-
-    public function __construct()
-    {
-        $this->config = new Config();
-    }
+    private string $dsn;
+    private string $pdo_username;
+    private string $pdo_password;
 
     public function getPDO(): \PDO
     {
-        try {
-            $pdo = new \PDO($this->getDSN(), $this->config->getUsername(), $this->config->getPassword());
-        } catch (\Throwable $exception) {
-            echo " Error #" . $exception->getCode() . " : " . $exception->getMessage()
-                . " in " . $exception->getFile() . " on line " . $exception->getLine();
-            exit();
-        }
-
-        return $pdo;
+        return new \PDO($this->dsn, $this->pdo_username, $this->pdo_password);
     }
 
-    private function getDSN(): string
+    public function __construct()
     {
-        return $this->config->getDriver()
+        self::initialize();
+    }
+
+    private function initialize(): void
+    {
+        $config = new Config();
+        $this->dsn = self::getDSN($config);
+        $this->pdo_username = self::getUsername($config);
+        $this->pdo_password = self::getPassword($config);
+    }
+
+    public function getDSN(Config $config): string
+    {
+        return $config->getDriver()
             . ":dbname="
-            . $this->config->getName()
+            . $config->getName()
             . ";host="
-            . $this->config->getHost()
+            . $config->getHost()
             . ";port="
-            . $this->config->getPort()
+            . $config->getPort()
             . ";charset="
-            . $this->config->getCharset();
+            . $config->getCharset();
+    }
+
+    public function getUsername(Config $config): string
+    {
+        return $config->getUsername();
+    }
+
+    public function getPassword(Config $config): string
+    {
+        return $config->getPassword();
+    }
+
+    public function setDSN(string $dsn): void
+    {
+        $this->dsn = $dsn;
+    }
+
+    public function setUsername(string $username): void
+    {
+        $this->pdo_username = $username;
+    }
+
+    public function setPassword(string $password): void
+    {
+        $this->pdo_password = $password;
     }
 }
