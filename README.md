@@ -95,4 +95,4 @@ vendor/bin/phpunit tests
 
 ## Project status
 
-*Completed*
+*In Development*
