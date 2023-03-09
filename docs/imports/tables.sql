@@ -7,157 +7,157 @@ CREATE SCHEMA IF NOT EXISTS movie_db
 USE movie_db;
 
 CREATE TABLE collection (
-    id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    collection_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     collection_name VARCHAR(50) NOT NULL,
-    overview VARCHAR(255) NOT NULL,
-    poster_path VARCHAR(255) NULL,
-    backdrop_path VARCHAR(255) NOT NULL,
-    PRIMARY KEY (id),
+    collection_overview VARCHAR(255) NOT NULL,
+    collection_poster_path VARCHAR(255) NULL,
+    collection_backdrop_path VARCHAR(255) NOT NULL,
+    PRIMARY KEY (collection_id),
     UNIQUE INDEX UX_collection_name (collection_name ASC) INVISIBLE
 ) ENGINE=InnoDB;
 
 CREATE TABLE company (
-    id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-    description VARCHAR(255) NOT NULL,
-    headquarters VARCHAR(255) NOT NULL,
-    homepage VARCHAR(255) NOT NULL,
-    logo_path VARCHAR(255) NOT NULL,
+    company_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    company_description VARCHAR(255) NOT NULL,
+    company_headquarters VARCHAR(255) NOT NULL,
+    company_homepage VARCHAR(255) NOT NULL,
+    company_logo_path VARCHAR(255) NOT NULL,
     company_name VARCHAR(50) NOT NULL,
-    origin_country VARCHAR(50) NOT NULL,
-    company_id INT UNSIGNED NULL,
-    PRIMARY KEY (id),
+    company_origin_country VARCHAR(50) NOT NULL,
+    parent_company INT UNSIGNED NULL,
+    PRIMARY KEY (company_id),
     UNIQUE INDEX UX_company_name (company_name ASC) INVISIBLE,
     CONSTRAINT FK_company_company
-        FOREIGN KEY (company_id)
-        REFERENCES company (id)
+        FOREIGN KEY (parent_company)
+        REFERENCES company (company_id)
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
 ) ENGINE=InnoDB;
 
 CREATE TABLE country (
-    id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    country_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     country_name VARCHAR(50) NOT NULL,
-    iso_3166_1 VARCHAR(9) NOT NULL,
-    PRIMARY KEY (id),
+    country_iso VARCHAR(9) NOT NULL,
+    PRIMARY KEY (country_id),
     UNIQUE INDEX UX_country_name (country_name ASC) INVISIBLE
 ) ENGINE=InnoDB;
 
 CREATE TABLE genre (
-    id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    genre_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     genre_name VARCHAR(50) NOT NULL,
-    PRIMARY KEY (id),
+    PRIMARY KEY (genre_id),
     UNIQUE INDEX UX_genre_name (genre_name ASC) INVISIBLE
 ) ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS language (
-    id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-    iso_639_1 VARCHAR(10) NOT NULL,
+    language_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    language_iso VARCHAR(10) NOT NULL,
     language_name VARCHAR(50) NOT NULL,
-    PRIMARY KEY (id),
+    PRIMARY KEY (language_id),
     UNIQUE INDEX UX_language_name (language_name ASC) INVISIBLE
 ) ENGINE=InnoDB;
 
 CREATE TABLE movie (
-    id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-    adult TINYINT NOT NULL,
-    backdrop_path VARCHAR(255) NULL,
-    collection_id INT UNSIGNED NULL,
-    budget INT UNSIGNED NOT NULL,
-    homepage VARCHAR(255) NULL,
-    imdb_id VARCHAR(9) NULL,
-    original_language VARCHAR(50) NOT NULL,
-    original_title VARCHAR(50) NULL,
-    overview VARCHAR(255) NULL,
-    popularity INT NOT NULL,
-    poster_path VARCHAR(255) NULL,
-    release_date DATE NOT NULL,
-    revenue INT UNSIGNED NOT NULL,
-    runtime INT UNSIGNED NULL,
-    status VARCHAR(15) NOT NULL,
-    tagline VARCHAR(100) NULL,
-    title VARCHAR(50) NOT NULL,
-    video TINYINT NOT NULL,
-    vote_average INT NOT NULL,
-    vote_count INT NOT NULL,
-    PRIMARY KEY (id),
-    UNIQUE INDEX UX_movie_original_title (original_title ASC) INVISIBLE,
-    UNIQUE INDEX UX_movie_title (title ASC) INVISIBLE,
-    INDEX IDX_movie_collection (collection_id ASC) INVISIBLE,
+    movie_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    movie_adult TINYINT NOT NULL,
+    movie_backdrop_path VARCHAR(255) NULL,
+    movie_collection INT UNSIGNED NULL,
+    movie_budget INT UNSIGNED NOT NULL,
+    movie_homepage VARCHAR(255) NULL,
+    movie_imdb VARCHAR(9) NULL,
+    movie_original_language VARCHAR(50) NOT NULL,
+    movie_original_title VARCHAR(50) NULL,
+    movie_overview VARCHAR(255) NULL,
+    movie_popularity INT NOT NULL,
+    movie_poster_path VARCHAR(255) NULL,
+    movie_release_date DATE NOT NULL,
+    movie_revenue INT UNSIGNED NOT NULL,
+    movie_runtime INT UNSIGNED NULL,
+    movie_status VARCHAR(15) NOT NULL,
+    movie_tagline VARCHAR(100) NULL,
+    movie_title VARCHAR(50) NOT NULL,
+    movie_video TINYINT NOT NULL,
+    movie_vote_average INT NOT NULL,
+    movie_vote_count INT NOT NULL,
+    PRIMARY KEY (movie_id),
+    UNIQUE INDEX UX_movie_original_title (movie_original_title ASC) INVISIBLE,
+    UNIQUE INDEX UX_movie_title (movie_title ASC) INVISIBLE,
+    INDEX IDX_movie_collection (movie_collection ASC) INVISIBLE,
     CONSTRAINT FK_movie_collection
-        FOREIGN KEY (collection_id)
-        REFERENCES collection (id)
+        FOREIGN KEY (movie_collection)
+        REFERENCES collection (collection_id)
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
 ) ENGINE=InnoDB;
 
-CREATE TABLE company_country (
-    company_id INT UNSIGNED NOT NULL,
-    country_id INT UNSIGNED NOT NULL,
-    PRIMARY KEY (company_id, country_id),
-    INDEX IDX_company_country_company (company_id ASC) INVISIBLE,
-    INDEX IDX_company_country_country (country_id ASC) INVISIBLE,
+CREATE TABLE companies_countries (
+    companies_id INT UNSIGNED NOT NULL,
+    countries_id INT UNSIGNED NOT NULL,
+    PRIMARY KEY (companies_id, countries_id),
+    INDEX IDX_company_country_company (companies_id ASC) INVISIBLE,
+    INDEX IDX_company_country_country (countries_id ASC) INVISIBLE,
     CONSTRAINT FK_company_country_company
-    FOREIGN KEY (company_id)
-        REFERENCES company (id)
+    FOREIGN KEY (companies_id)
+        REFERENCES company (company_id)
         ON DELETE NO ACTION
         ON UPDATE NO ACTION,
     CONSTRAINT FK_company_country_country
-        FOREIGN KEY (country_id)
-        REFERENCES country (id)
+        FOREIGN KEY (countries_id)
+        REFERENCES country (country_id)
         ON DELETE NO ACTION
         ON UPDATE NO ACTION
 ) ENGINE = InnoDB;
 
-CREATE TABLE movie_company (
-movie_id INT UNSIGNED NOT NULL,
-company_id INT UNSIGNED NOT NULL,
-PRIMARY KEY (movie_id, company_id),
-INDEX IDX_movie_company_company (movie_id ASC) INVISIBLE,
-INDEX IDX_movie_company_movie (company_id ASC) INVISIBLE,
+CREATE TABLE movies_companies (
+movies_id INT UNSIGNED NOT NULL,
+companies_id INT UNSIGNED NOT NULL,
+PRIMARY KEY (movies_id, companies_id),
+INDEX IDX_movie_company_company (movies_id ASC) INVISIBLE,
+INDEX IDX_movie_company_movie (companies_id ASC) INVISIBLE,
     CONSTRAINT FK_movie_company_movie
-        FOREIGN KEY (movie_id)
-        REFERENCES movie (id)
+        FOREIGN KEY (movies_id)
+        REFERENCES movie (movie_id)
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
     CONSTRAINT FK_movie_company_company
-        FOREIGN KEY (company_id)
-        REFERENCES company (id)
+        FOREIGN KEY (companies_id)
+        REFERENCES company (company_id)
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
 ) ENGINE=InnoDB;
 
-CREATE TABLE movie_genre (
-    movie_id INT UNSIGNED NOT NULL,
-    genre_id INT UNSIGNED NOT NULL,
-    PRIMARY KEY (movie_id, genre_id),
-    INDEX IDX_movie_genre_movie (movie_id ASC) INVISIBLE,
-    INDEX IDX_movie_genre_genre (genre_id ASC) INVISIBLE,
+CREATE TABLE movies_genres (
+    movies_id INT UNSIGNED NOT NULL,
+    genres_id INT UNSIGNED NOT NULL,
+    PRIMARY KEY (movies_id, genres_id),
+    INDEX IDX_movie_genre_movie (movies_id ASC) INVISIBLE,
+    INDEX IDX_movie_genre_genre (genres_id ASC) INVISIBLE,
     CONSTRAINT FK_movie_genre_movie
-        FOREIGN KEY (movie_id)
-        REFERENCES movie (id)
+        FOREIGN KEY (movies_id)
+        REFERENCES movie (movie_id)
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
     CONSTRAINT FK_movie_genre_genre
-        FOREIGN KEY (genre_id)
-        REFERENCES genre (id)
+        FOREIGN KEY (genres_id)
+        REFERENCES genre (genre_id)
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
 ) ENGINE=InnoDB;
 
-CREATE TABLE movie_language (
-    movie_id INT UNSIGNED NOT NULL,
-    language_id INT UNSIGNED NOT NULL,
-    PRIMARY KEY (movie_id, language_id),
-    INDEX IDX_movie_language_movie (movie_id ASC) INVISIBLE,
-    INDEX IDX_movie_language_language (language_id ASC) INVISIBLE,
+CREATE TABLE movies_languages (
+    movies_id INT UNSIGNED NOT NULL,
+    languages_id INT UNSIGNED NOT NULL,
+    PRIMARY KEY (movies_id, languages_id),
+    INDEX IDX_movie_language_movie (movies_id ASC) INVISIBLE,
+    INDEX IDX_movie_language_language (languages_id ASC) INVISIBLE,
     CONSTRAINT FK_movie_language_movie
-        FOREIGN KEY (movie_id)
-        REFERENCES movie (id)
+        FOREIGN KEY (movies_id)
+        REFERENCES movie (movie_id)
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
     CONSTRAINT FK_movie_language_language
-        FOREIGN KEY (language_id)
-        REFERENCES language (id)
+        FOREIGN KEY (languages_id)
+        REFERENCES language (language_id)
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
 ) ENGINE=InnoDB;

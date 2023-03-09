@@ -5,100 +5,70 @@ declare(strict_types=1);
 namespace Rest\Server\Repository;
 
 use Rest\Server\Database\Connection;
+use Rest\Server\Model\Company;
+use Rest\Server\Model\Genre;
+use Rest\Server\Model\Language;
+use Rest\Server\Model\Movie;
 
 class MovieRepository
 {
-    private Connection $connection;
-    public function __construct()
+    public function getMovieDetails(int $movie_id): Movie
     {
-        $this->connection = new Connection();
-    }
+        $connection = new Connection();
 
-    public function getMovieDetails(int $movie_id): bool|object
-    {
-        try {
-            $pdo = $this->connection->getPDO();
-            $query = "SELECT * FROM movie_db.movie WHERE id = ?;";
+        $pdo = $connection->getPDO();
+        $query = "SELECT * FROM movie_db.movie WHERE movie_id = ?;";
 
-            $statement = $pdo->prepare($query);
-            $statement->bindValue(1, $movie_id, \PDO::PARAM_INT);
-            $statement->execute();
-            $statement->setFetchMode(\PDO::FETCH_OBJ);
+        $statement = $pdo->prepare($query);
+        $statement->bindValue(1, $movie_id, \PDO::PARAM_INT);
+        $statement->execute();
+        $statement->setFetchMode(\PDO::FETCH_CLASS, Movie::class);
 
-            $movie = $statement->fetch();
-
-        } catch (\Throwable $exception) {
-            echo " Error #" . $exception->getCode() . " : " . $exception->getMessage()
-                . " in " . $exception->getFile() . " on line " . $exception->getLine();
-            exit();
-        }
-
-        return $movie;
+        return $statement->fetch();
     }
 
     public function getMovieCompanies(int $movie_id): array
     {
-        try {
-            $pdo = $this->connection->getPDO();
-            $query = "SELECT id, company_name, logo_path, origin_country FROM movie_db.company INNER JOIN movie_db.movie_company ON company.id = movie_company.company_id WHERE movie_id = ?;";
+        $connection = new Connection();
 
-            $statement = $pdo->prepare($query);
-            $statement->bindValue(1, $movie_id, \PDO::PARAM_INT);
-            $statement->execute();
-            $statement->setFetchMode(\PDO::FETCH_OBJ);
+        $pdo = $connection->getPDO();
+        $query = "SELECT company_id, company_name, company_logo_path, company_origin_country FROM movie_db.company INNER JOIN movie_db.movies_companies ON company.company_id = movies_companies.companies_id WHERE movies_id = ?;";
 
-            $companies = $statement->fetchAll();
+        $statement = $pdo->prepare($query);
+        $statement->bindValue(1, $movie_id, \PDO::PARAM_INT);
+        $statement->execute();
+        $statement->setFetchMode(\PDO::FETCH_CLASS, Company::class);
 
-        } catch (\Throwable $exception) {
-            echo " Error #" . $exception->getCode() . " : " . $exception->getMessage()
-                . " in " . $exception->getFile() . " on line " . $exception->getLine();
-            exit();
-        }
-
-        return $companies;
+        return $statement->fetchAll();
     }
 
     public function getMovieGenres(int $movie_id): array
     {
-        try {
-            $pdo = $this->connection->getPDO();
-            $query = "SELECT id, genre_name FROM movie_db.genre INNER JOIN movie_db.movie_genre ON genre.id = movie_genre.genre_id WHERE movie_id = ?;";
+        $connection = new Connection();
 
-            $statement = $pdo->prepare($query);
-            $statement->bindValue(1, $movie_id, \PDO::PARAM_INT);
-            $statement->execute();
-            $statement->setFetchMode(\PDO::FETCH_OBJ);
+        $pdo = $connection->getPDO();
+        $query = "SELECT genre_id, genre_name FROM movie_db.genre INNER JOIN movie_db.movies_genres ON genre.genre_id = movies_genres.genres_id WHERE movies_id = ?;";
 
-            $genres = $statement->fetchAll();
+        $statement = $pdo->prepare($query);
+        $statement->bindValue(1, $movie_id, \PDO::PARAM_INT);
+        $statement->execute();
+        $statement->setFetchMode(\PDO::FETCH_CLASS, Genre::class);
 
-        } catch (\Throwable $exception) {
-            echo " Error #" . $exception->getCode() . " : " . $exception->getMessage()
-                . " in " . $exception->getFile() . " on line " . $exception->getLine();
-            exit();
-        }
-
-        return $genres;
+        return $statement->fetchAll();
     }
 
     public function getMovieLanguages(int $movie_id): array
     {
-        try {
-            $pdo = $this->connection->getPDO();
-            $query = "SELECT iso_639_1, language_name FROM movie_db.language INNER JOIN movie_db.movie_language ON language.id = movie_language.language_id WHERE movie_id = ?;";
+        $connection = new Connection();
 
-            $statement = $pdo->prepare($query);
-            $statement->bindValue(1, $movie_id, \PDO::PARAM_INT);
-            $statement->execute();
-            $statement->setFetchMode(\PDO::FETCH_OBJ);
+        $pdo = $connection->getPDO();
+        $query = "SELECT language_iso, language_name FROM movie_db.language INNER JOIN movie_db.movies_languages ON language.language_id = movies_languages.languages_id WHERE movies_id = ?;";
 
-            $languages = $statement->fetchAll();
+        $statement = $pdo->prepare($query);
+        $statement->bindValue(1, $movie_id, \PDO::PARAM_INT);
+        $statement->execute();
+        $statement->setFetchMode(\PDO::FETCH_CLASS, Language::class);
 
-        } catch (\Throwable $exception) {
-            echo " Error #" . $exception->getCode() . " : " . $exception->getMessage()
-                . " in " . $exception->getFile() . " on line " . $exception->getLine();
-            exit();
-        }
-
-        return $languages;
+        return $statement->fetchAll();
     }
 }

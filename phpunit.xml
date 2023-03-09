@@ -19,6 +19,9 @@
     <testsuite name="database">
       <directory>tests/Database</directory>
     </testsuite>
+    <testsuite name="model">
+      <directory>tests/Model</directory>
+    </testsuite>
     <testsuite name="repository">
       <directory>tests/Repository</directory>
     </testsuite>

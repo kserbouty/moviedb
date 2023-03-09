@@ -5,35 +5,22 @@ declare(strict_types=1);
 namespace Rest\Server\Repository;
 
 use Rest\Server\Database\Connection;
+use Rest\Server\Model\Collection;
 
 class CollectionRepository
 {
-    private Connection $connection;
-
-    public function __construct()
+    public function getCollectionDetails(int $collection_id): Collection
     {
-        $this->connection = new Connection();
-    }
+        $connection = new Connection();
 
-    public function getCollectionDetails(int $collection_id): bool|object
-    {
-        try {
-            $pdo = $this->connection->getPDO();
-            $query = "SELECT * FROM movie_db.collection WHERE collection.id = ?;";
+        $pdo = $connection->getPDO();
+        $query = "SELECT * FROM movie_db.collection WHERE collection.collection_id = ?;";
 
-            $statement = $pdo->prepare($query);
-            $statement->bindValue(1, $collection_id, \PDO::PARAM_INT);
-            $statement->execute();
-            $statement->setFetchMode(\PDO::FETCH_OBJ);
+        $statement = $pdo->prepare($query);
+        $statement->bindValue(1, $collection_id, \PDO::PARAM_INT);
+        $statement->execute();
+        $statement->setFetchMode(\PDO::FETCH_CLASS, Collection::class);
 
-            $collection = $statement->fetch();
-
-        } catch (\Throwable $exception) {
-            echo " Error #" . $exception->getCode() . " : " . $exception->getMessage()
-                . " in " . $exception->getFile() . " on line " . $exception->getLine();
-            exit();
-        }
-
-        return $collection;
+        return $statement->fetch();
     }
 }

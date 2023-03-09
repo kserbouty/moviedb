@@ -8,25 +8,15 @@ use Rest\Server\Http\Response;
 use Rest\Server\Repository\CollectionRepository;
 use Rest\Server\Repository\CompanyRepository;
 use Rest\Server\Repository\MovieRepository;
-use Rest\Server\Service\Builder;
+use Rest\Server\Service\MovieBuilder;
 
-class MovieController extends Builder
+class MovieController extends MovieBuilder
 {
     public function getMovie(int $movie_id): string
     {
         $response = new Response();
         $repository = new MovieRepository();
         $movie = $repository->getMovieDetails($movie_id);
-
-        if (is_bool($movie)) {
-
-            $error = (object)[
-                'status_message' => 'Resources not found in the database.',
-                'status_code' => 404
-            ];
-
-            return $response->jsonResponse($error, 404);
-        }
 
         $data = $this->buildMovie($movie, $this);
 
