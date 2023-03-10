@@ -20,8 +20,7 @@ class Response
             $response = json_encode($data, JSON_THROW_ON_ERROR | JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
 
         } catch (\JsonException $exception) {
-            echo "Error #" . $exception->getCode() . " : " . $exception->getMessage();
-            exit();
+            $response =  "Error #" . $exception->getCode() . " : " . $exception->getMessage() . ".";
         }
 
         return $response;
