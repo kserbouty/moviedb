@@ -7,7 +7,7 @@ use Rest\Server\Database\Config;
 
 class ConfigTest extends TestCase
 {
-    public function testInitializeConfigFetchCredentials(): void
+    public function testGetCredentialsReturnExpectedStructure(): void
     {
         $config = new Config();
 

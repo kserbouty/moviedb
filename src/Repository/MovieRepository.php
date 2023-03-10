@@ -12,7 +12,7 @@ use Rest\Server\Model\Movie;
 
 class MovieRepository
 {
-    public function getMovieDetails(int $movie_id): Movie
+    public function getMovieDetails(int $movie_id): bool|Movie
     {
         $connection = new Connection();
 

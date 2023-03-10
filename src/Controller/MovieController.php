@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Rest\Server\Controller;
 
-use Rest\Server\Http\Response;
 use Rest\Server\Repository\CollectionRepository;
 use Rest\Server\Repository\CompanyRepository;
 use Rest\Server\Repository\MovieRepository;
@@ -12,15 +11,18 @@ use Rest\Server\Service\MovieBuilder;
 
 class MovieController extends MovieBuilder
 {
-    public function getMovie(int $movie_id): string
+    public function getMovie(int $movie_id): bool|object
     {
-        $response = new Response();
         $repository = new MovieRepository();
+
         $movie = $repository->getMovieDetails($movie_id);
 
-        $data = $this->buildMovie($movie, $this);
+        if (!is_bool($movie)) {
 
-        return $response->jsonResponse($data, 200);
+            return $this->buildMovie($movie, $this);
+        }
+
+        return $movie;
     }
 
     public function getCollection(?int $collection_id): ?object
