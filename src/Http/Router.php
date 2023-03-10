@@ -8,14 +8,29 @@ use Rest\Server\Controller\MovieController;
 
 class Router
 {
-    public function action(string $uri): void
+    public function action(string $uri): string
     {
         $response = new Response();
 
         if (str_contains($uri, '/movie/')) {
 
-            self::actionMovie($uri, $response);
+            $action = self::actionMovie($uri);
 
+            if (!array_key_exists('request', $action)) {
+                $data = (object)[
+                    'status_message' => $action['status_message'],
+                    'status_code' => $action['status_code']
+                ];
+                return $response->jsonResponse($data, $action['status_code']);
+            }
+
+            $data = (object)[
+                'status_message' => $action['status_message'],
+                'status_code' => $action['status_code'],
+                'request' => $action['request']
+            ];
+
+            return $response->jsonResponse($data, $action['status_code']);
         }
 
         $data = (object)[
@@ -23,38 +38,39 @@ class Router
             'status_code' => 501
         ];
 
-        echo $response->jsonResponse($data, 501);
-        exit(501);
+        return $response->jsonResponse($data, 501);
     }
 
-    private function actionMovie(string $uri, Response $response): void
+    private function actionMovie(string $uri): array
     {
         $split = explode('/movie/', $uri);
         $movie_id = $split[1];
 
         if (is_numeric($movie_id)) {
+
             $controller = new MovieController();
             $movie = $controller->getMovie((int)$movie_id);
 
             if (is_bool($movie)) {
-                $data = (object)[
+                return [
                     'status_message' => '404 Not Found',
                     'status_code' => 404
                 ];
-                echo $response->jsonResponse($data, 404);
-                exit(404);
             }
 
-            echo $response->jsonResponse($movie, 200);
-            exit(200);
+            return [
+                'status_message' => '200 OK',
+                'status_code' => 200,
+                'request' => $movie
+            ];
 
         } else {
-            $data = (object)[
+
+            return [
                 'status_message' => '403 Forbidden',
                 'status_code' => 403
             ];
-            echo $response->jsonResponse($data, 403);
-            exit(403);
         }
+
     }
 }
