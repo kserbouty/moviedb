@@ -2,48 +2,48 @@
 
 REST API inspired by [The Movie Database API](<https://www.themoviedb.org/documentation/api>).
 
-Build a relational database representing the data needed to reproduce a response made from The Movie Database API.
-Perform data access through repositories and prepare responses with correct headers to send a JSON object.
-
-Follow PSR-1, PSR-4 and PSR-12 recommendations.
+Reproduce the JSON response [Get Details](<https://developers.themoviedb.org/3/movies/get-movie-details>)
+made from The Movie Database to be received by an external client. Handle data persistence with SQL and build
+the response with the structure
+provided by [The Movie Database API](<https://www.themoviedb.org/documentation/api>). 
 
 ### Technologies
 
 - PHP 8.1
-- Apache 2.4
 - MySQL 8.0
+- Apache 2.4
+- Composer 2.5
+- PHPUnit 10.0
 
-### Resources
+### Response
 
-- REST : <https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm>
-- Repository pattern : <https://martinfowler.com/eaaCatalog/repository.html>
-- Response model : <https://developers.themoviedb.org/3/movies/get-movie-details>
+![image](docs/screenshots/response.png)
 
-### Visuals
+### Coverage
 
-*Database related to movies*
+![image](docs/screenshots/coverage.png)
 
-![image](docs/diagrams/entity-relationship.png)
+### Overview
 
-*Code 403*
-
-![image](docs/screenshots/403.png)
-
-*Code 404*
-
-![image](docs/screenshots/404.png)
-
-*Response*
-
-![image](docs/screenshots/movie-details.png)
+- `/config` - Contains database configuration.
+- `/docs` - Contains imports for SQL database.
+- `/public` - Entry point with server configuration.
+- `/src` - Contains all the classes.
+- `/src/Controller` - Handle data needed by the router.
+- `/src/Database` - Establish connection to the database.
+- `/src/Http` - Handle responses with correct status.
+- `/src/Model` - Entities of the application.
+- `/src/Repository` - Handle data persistence.
+- `/src/Service` - Handle the structure of a JSON response.
+- `/tests` - Contains all the tests.
 
 ## Installation
 
 ### Requirements
 
 - PHP 8.1+
-- Apache 2.4+
 - MySQL 8.0+
+- Composer 2.5+
 
 ### Manual installation
 
@@ -65,7 +65,7 @@ Install all the dependencies with composer :
 composer install
 ```
 
-Set database credentials in config/config.ini then import sql scripts (tables.sql first) available in docs/imports.
+Set your database credentials in config/config.ini, then import the database available in docs/imports.
 
 Run the local server :
 
@@ -73,7 +73,7 @@ Run the local server :
 php -S localhost:8000 -t public
 ```
 
-Responses available :
+Response available :
 
 - Akira : <http://localhost:8000/movie/1>
 - Ghost in the Shell : <http://localhost:8000/movie/2>
@@ -86,7 +86,7 @@ Responses available :
 Run PHPUnit :
 
 ```bash
-vendor/bin/phpunit tests
+vendor/bin/phpunit
 ```
 
 ## License
@@ -95,4 +95,4 @@ vendor/bin/phpunit tests
 
 ## Project status
 
-*In Development*
+*Completed*
