@@ -1,0 +1,51 @@
+version: "3.8"
+
+services:
+
+  server:
+    container_name: server
+    build:
+      context: ./
+      dockerfile: .docker/php/Dockerfile
+    volumes:
+      - ./:/var/www/html/
+      - ./.docker/conf:/etc/apache2/sites-enabled
+    ports:
+      - "8001:80"
+      - "443:443"
+    networks:
+      - server
+
+  database:
+    image: mysql:8.0-debian
+    container_name: database
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: yes
+    volumes:
+      - ./.docker/mysql:/var/lib/mysql/
+    ports:
+      - "3306:3306"
+    networks:
+      - server
+
+  admin:
+    image: phpmyadmin
+    container_name: admin
+    restart: always
+    ports:
+      - "8080:80"
+    environment:
+      - PMA_ARBITRARY=1
+      - PMA_HOST=database
+      - PMA_USER=root
+    networks:
+      - server
+
+networks:
+  server:
+    driver: bridge
+
+volumes:
+  mysql:

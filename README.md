@@ -81,12 +81,50 @@ Response available :
 - The Lord of the Rings: The Two Towers : <http://localhost:8000/movie/4>
 - The Lord of the Rings: The Return of the King : <http://localhost:8000/movie/5>
 
+### Docker installation
+
+Clone the repository :
+
+```bash
+git clone https://github.com/kserbouty/moviedb.git
+```
+
+Switch to the repository folder :
+
+```bash
+cd moviedb
+```
+
+Build your containers :
+
+```bash
+docker-compose up -d --build
+```
+
+Access the API on <http://localhost:8001>, phpMyAdmin on <http://localhost:8080> to import the database.
+
+Set your database credentials in config/config.ini, then import the database available in docs/imports.
+
+Response available :
+
+- Akira : http://localhost:8001/movie/1
+- Ghost in the Shell : http://localhost:8001/movie/2
+- The Lord of the Rings: The Fellowship of the Ring : http://localhost:8001/movie/3
+- The Lord of the Rings: The Two Towers : http://localhost:8001/movie/4
+- The Lord of the Rings: The Return of the King : http://localhost:8001/movie/5
+
 ### Tests
 
-Run PHPUnit :
+Run PHPUnit locally :
 
 ```bash
 vendor/bin/phpunit
+```
+
+Run PHPUnit with Docker :
+
+```bash
+docker-compose exec server php vendor/bin/phpunit
 ```
 
 ## License

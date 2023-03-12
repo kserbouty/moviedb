@@ -1,6 +1,7 @@
 {
     "name": "kserbouty/moviedb",
     "type": "project",
+    "description": "REST API inspired by The Movie Database API.",
     "license": "MIT",
     "autoload": {
         "psr-4": {
